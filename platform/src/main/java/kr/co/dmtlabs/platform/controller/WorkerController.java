@@ -10,5 +10,11 @@ public class WorkerController {
 	public String home() {
 		return "worker/worker";
 	}
+	
+	@RequestMapping
+	public String selectMyInfo() {
+		
+		return "worker/selectWorkerInfo";
+	}
 
 }
