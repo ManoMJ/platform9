@@ -14,10 +14,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-	
+
 	@Autowired
 	protected void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-		
+
 		auth.inMemoryAuthentication().withUser("admin").password("{noop}admin").roles("ADMIN");
 		auth.inMemoryAuthentication().withUser("manager").password("{noop}manager").roles("MANAGER");
 		auth.inMemoryAuthentication().withUser("worker").password("{noop}worker").roles("WORKER");
@@ -26,9 +26,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	public void configure(WebSecurity web) throws Exception {
-        web.ignoring()
-        // Spring Security should completely ignore URLs starting with /resources/
-        .antMatchers("/resources/**");
+		web.ignoring()
+				// Spring Security should completely ignore URLs starting with /resources/
+				.antMatchers("/resources/**").antMatchers("/h2-console/**");
+
 	}
 
 	@Override
@@ -36,13 +37,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 		http // HttpSecurity 媛앹껜瑜� �꽕�젙�븳�떎.
 				.authorizeRequests() // 沅뚰븳�슂泥� 泥섎━ �꽕�젙 硫붿꽌�뱶�씠�떎.
-				.antMatchers("/admin/**").hasRole("ADMIN")
-				.antMatchers("/manager/**").hasAnyRole("ADMIN","MANAGER")
-				.antMatchers("/reader/**").hasAnyRole("ADMIN","MANAGER","READER")
-				.antMatchers("/worker/**").hasAnyRole("ADMIN","MANAGER","READER","WORKER")
-				.antMatchers("/main").authenticated()
-				.and().logout().permitAll().and()
-				.formLogin().and().csrf().disable();
+				.antMatchers("/admin/**").hasRole("ADMIN").antMatchers("/manager/**").hasAnyRole("ADMIN", "MANAGER")
+				.antMatchers("/reader/**").hasAnyRole("ADMIN", "MANAGER", "READER").antMatchers("/worker/**")
+				.hasAnyRole("ADMIN", "MANAGER", "READER", "WORKER").antMatchers("/main").authenticated().and().logout()
+				.permitAll().and().formLogin().and().csrf().disable();
 	}
 
 	@Bean
