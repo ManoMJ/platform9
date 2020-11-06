@@ -1,77 +1,56 @@
 package kr.co.dmtlabs.platform.domain;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import lombok.*;
+import org.hibernate.annotations.GenericGenerator;
 
+import javax.persistence.*;
+import java.time.LocalDateTime;
+
+@Getter
+@Setter
 @Entity
+@Table
+@Data
 public class Project {
 	@Id
-	@GeneratedValue
+	@Column
+	@GeneratedValue(generator="system-uuid")
+	@GenericGenerator(name="system-uuid", strategy = "uuid")
 	private String Project_Code;
+
+	@Column
 	private String Project_Name;
+
+	@Column
 	private String Creator;
-	private String Created_Time;
+
+	@Column
+	private LocalDateTime Created_Time;
+
+	@Column
 	private String Owner;
+
+	@Column
 	private String Project_Desc;
+
+	@Column
 	private String Deadline;
-	
+
+
 	public Project() {}
 
-	public String getProject_Code() {
-		return Project_Code;
+	@Builder
+	public Project(String Project_Code, String Project_Name, String Creator,
+				   LocalDateTime Created_Time,
+				    String Owner, String Project_Desc, String Deadline) {
+		this.Project_Code = Project_Code;
+		this.Created_Time = Created_Time;
+		this.Project_Name = Project_Name;
+		this.Creator = Creator;
+		this.Owner = Owner;
+		this.Project_Desc = Project_Desc;
+		this.Deadline = Deadline;
 	}
 
-	public void setProject_Code(String project_Code) {
-		Project_Code = project_Code;
-	}
 
-	public String getProject_Name() {
-		return Project_Name;
-	}
-
-	public void setProject_Name(String project_Name) {
-		Project_Name = project_Name;
-	}
-
-	public String getCreator() {
-		return Creator;
-	}
-
-	public void setCreator(String creator) {
-		Creator = creator;
-	}
-
-	public String getCreated_Time() {
-		return Created_Time;
-	}
-
-	public void setCreated_Time(String created_Time) {
-		Created_Time = created_Time;
-	}
-
-	public String getOwner() {
-		return Owner;
-	}
-
-	public void setOwner(String owner) {
-		Owner = owner;
-	}
-
-	public String getProject_Desc() {
-		return Project_Desc;
-	}
-
-	public void setProject_Desc(String project_Desc) {
-		Project_Desc = project_Desc;
-	}
-
-	public String getDeadline() {
-		return Deadline;
-	}
-
-	public void setDeadline(String deadline) {
-		Deadline = deadline;
-	}
-	
 	
 }

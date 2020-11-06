@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout/default">
+
+<head>
+    <title>Form</title>
+    <th:block layout:fragment="contentsCss">
+    </th:block>
+</head>
+
+<body>
+
+<div class="container" layout:fragment="content">
+    <div class="page-header">
+
+    </div>
+    <br/>
+    <input id="project_code" type="hidden" th:value="${project?.project_Code}" />
+    <input id="project_created_time" type="hidden" th:value="${project?.created_Time}" />
+    <table class="table">
+        <tr>
+            <th style="padding:13px 0 0 15px;">생성 날짜</th>
+            <td>
+                <input type="text" class="form-control input-sm"
+                       readonly th:value="${project?.created_Time} ?
+                                                ${#temporals.format(project.created_Time, 'yyyy-MM-dd HH:mm')} : ${project.created_Time}" />
+            </td>
+        </tr>
+        <tr>
+            <th style="padding:13px 0 0 15px;">제목</th>
+            <td>
+                <input id="board_title" type="text" class="form-control input-sm" th:value="${project?.project_Name}" />
+            </td>
+        </tr>
+        <tr>
+            <th style="padding:13px 0 0 15px;">내용</th>
+            <td>
+                    <textarea id="board_content" class="form-control input-sm"
+                              maxlength="140" rows="70" style="height: 200px;" th:text="${project?.project_Desc}" ></textarea>
+                <span class="help-block"></span>
+            </td>
+        </tr>
+    </table>
+
+    <!-- 목록으로 -->
+    <div class="pull-left">
+        <a href="/manager/selectMyProjectList" class="btn btn-success">목록으로</a>
+    </div>
+
+
+</div>
+
+<th:block layout:fragment="contentsScript">
+</th:block>
+
+<th:block layout:fragment="customScript">
+
+</th:block>
+</body>
+</html>
